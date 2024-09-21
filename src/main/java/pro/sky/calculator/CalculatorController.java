@@ -16,13 +16,18 @@ public class CalculatorController {
     public CalculatorController(CalculatorSevise service) {
         this.service = service;
     }
+
     @GetMapping
     public String hello() {
         return "Добро пожаловать в калькулятор";
     }
 
     @GetMapping("/plus")
-    public String plus(@RequestParam Integer num1, @RequestParam Integer num2) {
+    public String plus(@RequestParam(required = false) Integer num1, @RequestParam(required = false) Integer num2) {
+        if (num1 == null || num2 == null) {
+            return "Ошибка заполнения";
+        }
+
         return num1 + " + " + num2 + " = " + service.plus(num1, num2);
     }
 
